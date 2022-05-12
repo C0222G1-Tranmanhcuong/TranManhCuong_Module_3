@@ -22,5 +22,3 @@ select * from teacher;
 update class set `name` = 'c022g1' where id = 1;
 update class set `name` = 'c022g2' where id = 2;
 update class set `name` = 'c022g3' where id = 3;
-
-
