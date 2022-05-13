@@ -90,16 +90,16 @@ insert into chi_tiet_don_dat_hang values(2,2);
 select * from chi_tiet_don_dat_hang;
 
 create table sdt(
-sdt varchar(20),
-ma_ncc int primary key,
+sdt varchar(20) primary key,
+ma_ncc int,
 foreign key(ma_ncc) references nha_cung_cap(ma_ncc)
 );
 
 insert into sdt values('09772879',101);
-insert into sdt values('09772879',102);
+insert into sdt values('09728431',102);
 select * from sdt;
 
--- drop database quan_ly_vat_tu;--
+ -- drop database quan_ly_vat_tu;
 
 
 
