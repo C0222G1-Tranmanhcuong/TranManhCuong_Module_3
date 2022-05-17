@@ -54,14 +54,14 @@ insert into nhan_vien values(1,'Trần Mạnh Cường','1997-01-28',
 '9272636',10000.0,'0332920629',
 'cuongpro@.com','Quảng Bình',2,3,3);
 
-insert into nhan_vien values(2,'Hoàng Ngọc Nam','1999-05-15',
+insert into nhan_vien values(2,'Hoàng Ngọc Kiên','1999-05-15',
 '3747238',20000.0,'0332920627',
 'nampro@.com','Đà Nẵng',1,2,2);
 
 insert into nhan_vien values(3,'Nguyễn Hà Phương','1995-09-04',
 '3462772',30000.0,'0332920635',
 'phuongpro@.com','Nghệ An',3,2,1);
-insert into nhan_vien values(4,'Cao Bình Minh','2000-01-11',
+insert into nhan_vien values(4,'Cao Xuân Hải','2000-01-11',
 '5324342',40000.0,'0332946753',
 'minhgpro@.com','Thanh Hoá',1,3,4);
 
@@ -71,16 +71,19 @@ insert into khach_hang values(1,2,'Nguyễn Văn An','1997-03-30',
 1,'2331123','0123123123','anpro@.vn','Đà Nẵng');
 
 insert into khach_hang values(2,3,'Lê Anh Dũng','2000-09-05',
-1,'233112323','0123123456','dungpro@.vn','Thanh Hoá');
+1,'233112323','0123123456','dungpro@.vn','Vinh');
 
 insert into khach_hang values(3,5,'Trần Kiều Vi','1971-03-30',
 1,'233112563','0123123123','vipro@.vn','Quảng Trị');
 
 insert into khach_hang values(4,1,'Trương Đình Hoàng','2012-11-21',
-1,'233113223','0123123789','anpro@.vn','Hà Tĩnh');
+1,'233113223','0123123789','anpro@.vn','Quảng Ngãi');
 
 insert into khach_hang values(5,1,'Kiều Minh Tuấn','2002-10-10',
 1,'233113223','0123123789','tuanpro@.vn','Quảng Trị');
+
+insert into khach_hang values(6,4,'Nguyễn Văn An','1997-03-30',
+1,'2331123','0123123123','anpro@.vn','Đà Nẵng');
 ----------------------------------------------------
 
 insert into dich_vu values(1,'villa beach fort',32,11000.0,4,1,1,'vip','good',33.0,5);
@@ -88,9 +91,9 @@ insert into dich_vu values(2,'room twin01',40,11000.0,5,2,3,null,null,null,null)
 insert into dich_vu values(3,'House Princess 02',25,11000.0,6,1,2,'vip','good',null,6);
 -----------------------------------------------------
 
-insert into hop_dong values(1,'2020-12-08 00:00:00','2020-12-08 00:00:00',0,1,2,1);
+insert into hop_dong values(1,'2020-01-08 00:00:00','2020-12-08 00:00:00',0,1,2,1);
 insert into hop_dong values(2,'2020-07-04 00:00:00','2020-07-04 00:00:00',10000.0,2,3,2);
-insert into hop_dong values(3,'2021-04-12 00:00:00','2020-04-12 00:00:00',11000.0,3,4,3);
+insert into hop_dong values(3,'2021-02-12 00:00:00','2020-04-12 00:00:00',11000.0,3,4,3);
 insert into hop_dong values(4,'2021-09-15 00:00:00','2020-12-08 00:00:00',0,1,2,3);
 
 -------------------------------------------------------
