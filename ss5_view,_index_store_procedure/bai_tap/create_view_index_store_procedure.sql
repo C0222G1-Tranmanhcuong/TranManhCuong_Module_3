@@ -36,6 +36,8 @@ product_status VARCHAR(45)
   SELECT product_code, product_name, product_price, product_status FROM products ;
   SELECT * FROM w_product;
   
+  SELECT * FROM w_product;
+  
   -- Task 5: Tiến hành sửa đổi view, Tiến hành xoá view.
   
   UPDATE w_product 
@@ -61,30 +63,30 @@ product_status VARCHAR(45)
   delimiter \\
   CREATE PROCEDURE sp_add_product()
   BEGIN
-  INSERT INTO products VALUES(4, 'A07', 'sony', 18000.0, 10,'cảm ứng','ok');
+  INSERT INTO products VALUES(5, 'A07', 'sony', 18000.0, 10,'cảm ứng','ok');
   END \\
   delimiter ;
   CALL sp_add_product;
   
   delimiter \\
-  CREATE PROCEDURE sp_update_product()
+  CREATE PROCEDURE sp_update_product(In p_id int,  p_price double)
   BEGIN
   UPDATE products
-  set product_price = 30000.0
-  WHERE id = 2;
+  set product_price = p_price
+  WHERE id = p_id;
   END \\
   delimiter ;
   
-  CALL sp_update_product;
+  CALL sp_update_product(2, 400000.0);
   
    delimiter \\
-  CREATE PROCEDURE sp_delete_product()
+  CREATE PROCEDURE sp_delete_product( in p_id int)
   BEGIN
   DELETE FROM products
-  WHERE id = 3;
+  WHERE id = p_id;
   END \\
   delimiter ;
-  CALL sp_delete_product;
+  CALL sp_delete_product(1);
   
   
 	
