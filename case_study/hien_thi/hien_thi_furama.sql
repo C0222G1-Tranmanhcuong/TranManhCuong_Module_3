@@ -97,12 +97,45 @@ WHERE EXISTS( SELECT ma_dich_vu from hop_dong where quarter(ngay_lam_hop_dong) =
 AND Not EXISTS  (SELECT ma_dich_vu FROM hop_dong WHERE quarter(ngay_lam_hop_dong) in(1,2) AND year(ngay_lam_hop_dong) =2021 AND hop_dong.ma_dich_vu = dv.ma_dich_vu)
 GROUP BY hd.ma_hop_dong;
 
--- Task 13: 13.	Hiển thị thông tin các Dịch vụ đi kèm được sử dụng nhiều nhất bởi các Khách hàng đã đặt phòng.
+-- Task 13:	Hiển thị thông tin các Dịch vụ đi kèm được sử dụng nhiều nhất bởi các Khách hàng đã đặt phòng.
 -- (Lưu ý là có thể có nhiều dịch vụ có số lần sử dụng nhiều như nhau)
 
-SELECT dvdk.ma_dich_vu_di_kem, dvdk.ten_dich_vu_di_kem, dvdk.gia, count(hdct.ma_dich_vu_di_kem) as so_lan_dat FROM hop_dong_chi_tiet hdct
+SELECT dvdk.ma_dich_vu_di_kem, dvdk.ten_dich_vu_di_kem, dvdk.gia, sum(hdct.so_luong) as so_lan_dat FROM hop_dong_chi_tiet hdct
 JOIN hop_dong hd on hd.ma_hop_dong = hdct.ma_hop_dong
 JOIN dich_vu_di_kem dvdk on dvdk.ma_dich_vu_di_kem = hdct.ma_dich_vu_di_kem
-GROUP BY ma_dich_vu_di_kem;
+GROUP BY ma_dich_vu_di_kem
+HAVING sum(hdct.so_luong) >= ( SELECT sum(hdct.so_luong) FROM hop_dong_chi_tiet hdct GROUP BY ma_dich_vu_di_kem ORDER BY sum(hdct.so_luong) DESC LIMIT 1)
+;
+
+-- Task 14: 14.	Hiển thị thông tin tất cả các Dịch vụ đi kèm chỉ mới được sử dụng một lần duy nhất.
+-- Thông tin hiển thị bao gồm ma_hop_dong, ten_loai_dich_vu, ten_dich_vu_di_kem, so_lan_su_dung (được tính dựa trên việc count các ma_dich_vu_di_kem).
+
+ SELECT hd.ma_hop_dong, ldv.ten_loai_dich_vu, dvdk.ten_dich_vu_di_kem, count(hdct.ma_dich_vu_di_kem) as so_lan_su_dung FROM hop_dong hd
+ JOIN dich_vu dv on hd.ma_dich_vu = dv.ma_dich_vu
+ JOIN loai_dich_vu ldv on ldv.ma_loai_dich_vu = dv.ma_loai_dich_vu
+ JOIN hop_dong_chi_tiet hdct on hdct.ma_hop_dong = hd.ma_hop_dong
+ JOIN dich_vu_di_kem dvdk on hdct.ma_dich_vu_di_kem = dvdk.ma_dich_vu_di_kem 
+ GROUP BY ten_loai_dich_vu
+ HAVING count(hdct.ma_dich_vu_di_kem) = 1;
+ 
+ -- Task 15: Hiển thi thông tin của tất cả nhân viên bao gồm ma_nhan_vien, ho_ten, ten_trinh_do, ten_bo_phan, so_dien_thoai, dia_chi 
+ -- mới chỉ lập được tối đa 3 hợp đồng từ năm 2020 đến 2021. 
+
+SELECT nv.ma_nhan_vien, nv.ho_ten, td.ten_trinh_do, bp.ten_bo_phan, nv.so_dien_thoai, nv.dia_chi, count(hd.ma_nhan_vien) as so_luong_hop_dong  
+FROM nhan_vien nv
+JOIN hop_dong hd on nv.ma_nhan_vien = hd.ma_nhan_vien
+JOIN trinh_do td on nv.ma_trinh_do = td.ma_trinh_do
+JOIN bo_phan bp on nv.ma_bo_phan = bp.ma_bo_phan
+WHERE year(hd.ngay_lam_hop_dong) = 2020 OR year(hd.ngay_lam_hop_dong)= 2021
+GROUP BY nv.ma_nhan_vien
+HAVING count(hd.ma_nhan_vien) <= 3;
+
+-- Task 16:	Xóa những Nhân viên chưa từng lập được hợp đồng nào từ năm 2019 đến năm 2021.
+
+SET SQL_SAFE_UPDATES = 0;
+DELETE FROM nhan_vien 
+WHERE nhan_vien.ma_nhan_vien not in (SELECT hop_dong.ma_nhan_vien FROM hop_dong WHERE year(ngay_lam_hop_dong) IN (2020, 2021)) ;
+
+
 
 

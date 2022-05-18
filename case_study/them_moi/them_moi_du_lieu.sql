@@ -74,7 +74,7 @@ insert into khach_hang values(2,3,'Lê Anh Dũng','2000-09-05',
 1,'233112323','0123123456','dungpro@.vn','Vinh');
 
 insert into khach_hang values(3,5,'Trần Kiều Vi','1971-03-30',
-1,'233112563','0123123123','vipro@.vn','Quảng Trị');
+1,'233112563','0123123123','vipro@.vn','Vinh');
 
 insert into khach_hang values(4,1,'Trương Đình Hoàng','2012-11-21',
 1,'233113223','0123123789','anpro@.vn','Quảng Ngãi');
@@ -91,15 +91,19 @@ insert into dich_vu values(2,'room twin01',40,11000.0,5,2,3,null,null,null,null)
 insert into dich_vu values(3,'House Princess 02',25,11000.0,6,1,2,'vip','good',null,6);
 -----------------------------------------------------
 
-insert into hop_dong values(1,'2020-01-08 00:00:00','2020-12-08 00:00:00',0,1,2,1);
+insert into hop_dong values(1,'2020-11-08 00:00:00','2020-12-08 00:00:00',0,1,2,1);
 insert into hop_dong values(2,'2020-07-04 00:00:00','2020-07-04 00:00:00',10000.0,2,3,2);
 insert into hop_dong values(3,'2021-02-12 00:00:00','2020-04-12 00:00:00',11000.0,3,4,3);
 insert into hop_dong values(4,'2021-09-15 00:00:00','2020-12-08 00:00:00',0,1,2,3);
+insert into hop_dong values(5,'2021-10-08 00:00:00','2021-12-08 00:00:00',0,1,2,1);
 
 -------------------------------------------------------
 
 insert into hop_dong_chi_tiet values(1,2,2,10);
-insert into hop_dong_chi_tiet values(2,1,1,10);
-insert into hop_dong_chi_tiet values(3,4,3,10);
+insert into hop_dong_chi_tiet values(2,1,2,10);
+insert into hop_dong_chi_tiet values(3,4,2,10);
+insert into hop_dong_chi_tiet values(4,3,3,10);
+insert into hop_dong_chi_tiet values(5,5,3,10);
+insert into hop_dong_chi_tiet values(6,4,1,10);
 
  -- drop database furama_management;
