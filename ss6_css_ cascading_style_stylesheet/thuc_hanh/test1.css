@@ -1,0 +1,28 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+#header{
+    height: 100px;
+    width: 100%;
+    background: gold;
+}
+#main{
+    height: 300px;
+    width: 70%;
+    background: bisque;
+    float: left;
+}
+#sidebar{
+    height: 300px;
+    width: 30%;
+    background: aqua;
+    float: left;
+
+}
+#footer{
+    height:100px;
+    width: 100%;
+    background: blueviolet;
+    clear: both;
+}

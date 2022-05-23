@@ -126,9 +126,9 @@ FROM nhan_vien nv
 JOIN hop_dong hd on nv.ma_nhan_vien = hd.ma_nhan_vien
 JOIN trinh_do td on nv.ma_trinh_do = td.ma_trinh_do
 JOIN bo_phan bp on nv.ma_bo_phan = bp.ma_bo_phan
-WHERE year(hd.ngay_lam_hop_dong) = 2020 OR year(hd.ngay_lam_hop_dong)= 2021
+WHERE year(hd.ngay_lam_hop_dong) in (2020,2021)
 GROUP BY nv.ma_nhan_vien
-HAVING count(hd.ma_nhan_vien) <= 3;
+HAVING so_luong_hop_dong <= 3;
 
 -- Task 16:	Xóa những Nhân viên chưa từng lập được hợp đồng nào từ năm 2019 đến năm 2021.
 
@@ -137,5 +137,83 @@ DELETE FROM nhan_vien
 WHERE nhan_vien.ma_nhan_vien not in (SELECT hop_dong.ma_nhan_vien FROM hop_dong WHERE year(ngay_lam_hop_dong) IN (2020, 2021)) ;
 
 
+-- Task 17: Cập nhật thông tin những khách hàng có ten_loai_khach từ Platinum lên Diamond, 
+-- chỉ cập nhật những khách hàng đã từng đặt phòng với Tổng Tiền thanh toán trong năm 2021 là lớn hơn 10.000.000 VNĐ.
 
+UPDATE khach_hang kh
+SET kh.ma_loai_khach = 1
+WHERE kh.ma_loai_khach = 2
+AND kh.ma_khach_hang in
+ ( SELECT hd.ma_khach_hang FROM hop_dong hd
+JOIN dich_vu dv on hd.ma_dich_vu = dv.ma_dich_vu
+JOIN hop_dong_chi_tiet hdct on hdct.ma_hop_dong = hd.ma_hop_dong
+JOIN dich_vu_di_kem dvdk on dvdk.ma_dich_vu_di_kem = hdct.ma_dich_vu_di_kem
+WHERE year(hd.ngay_lam_hop_dong) =2021
+GROUP BY hd.ma_khach_hang
+HAVING (sum(dv.chi_phi_thue + (hdct.so_luong * dvdk.gia)) > 1000) );
+
+-- Task 18 	Xóa những khách hàng có hợp đồng trước năm 2021 (chú ý ràng buộc giữa các bảng).
+CREATE VIEW khach_hang_can_xoa as
+ (SELECT hd.ma_khach_hang, hd.ngay_lam_hop_dong FROM hop_dong hd 
+ where year(ngay_lam_hop_dong) < (2021)
+ group by hd.ma_khach_hang);
+ 
+ALTER TABLE hop_dong DROP FOREIGN KEY hop_dong_ibfk_2;
+
+alter table hop_dong add foreign key (ma_khach_hang) references khach_hang (ma_khach_hang)  on delete set null;
+
+delete from khach_hang kh where kh.ma_khach_hang in (select ma_khach_hang from khach_hang_can_xoa);
+
+-- Task 19 :	Cập nhật giá cho các dịch vụ đi kèm được sử dụng trên 10 lần trong năm 2020 lên gấp đôi.
+
+create view cap_nhat_gia as
+select dvdk.ma_dich_vu_di_kem, sum(hdct.so_luong) as so_lan_su_dung, dvdk.ten_dich_vu_di_kem, dvdk.gia from hop_dong_chi_tiet hdct
+join hop_dong hd on hdct.ma_hop_dong = hd.ma_hop_dong
+join dich_vu_di_kem dvdk on dvdk.ma_dich_vu_di_kem = hdct.ma_dich_vu_di_kem
+where year(ngay_lam_hop_dong) = 2020
+group by ma_dich_vu_di_kem
+having so_lan_su_dung > 10;
+
+ update dich_vu_di_kem dvdk
+ set dvdk.gia = gia*2 
+ where dvdk.ma_dich_vu_di_kem in (select ma_dich_vu_di_kem from cap_nhat_gia);
+ 
+ 
+ -- Task 20: Hiển thị thông tin của tất cả các nhân viên và khách hàng có trong hệ thống, 
+ -- thông tin hiển thị bao gồm id (ma_nhan_vien, ma_khach_hang), ho_ten, email, so_dien_thoai, ngay_sinh, dia_chi.
+
+ select ma_nhan_vien, ho_ten, email, so_dien_thoai, ngay_sinh, dia_chi
+ from nhan_vien
+ UNION all
+  select ma_khach_hang, ho_ten , email, so_dien_thoai , ngay_sinh, dia_chi 
+ from khach_hang;
+ 
+ 
+ -- Task 21: Tạo khung nhìn có tên là v_nhan_vien để lấy được thông tin của tất cả các nhân viên có địa chỉ là “Hải Châu” 
+ -- và đã từng lập hợp đồng cho một hoặc nhiều khách hàng bất kì với ngày lập hợp đồng là “12/12/2019”.
+ 
+ create view v_nhan_vien as
+ select *from nhan_vien nv
+ join hop_dong hd on hd.ma_nhan_vien = nv.ma_nhan_vien
+ where nv.dia_chi = 'Nghệ An'and  date(ngay_lam_hop_dong) = '2021-02-12';
+
+
+-- Task 22: Thông qua khung nhìn v_nhan_vien thực hiện cập nhật địa chỉ thành “Liên Chiểu” đối với tất cả các nhân viên được nhìn thấy bởi khung nhìn này
+
+update v_nhan_vien
+set dia_chi = 'Liên Chiểu'
+where dia_chi = 'Nghệ An' ;
+
+-- Task 23:	Tạo Stored Procedure sp_xoa_khach_hang dùng để xóa thông tin
+--  của một khách hàng nào đó với ma_khach_hang được truyền vào như là 1 tham số của sp_xoa_khach_hang.
+
+delimiter \\
+CREATE PROCEDURE sp_xoa_khach_hang (in sp_mkh int)
+begin 
+delete from khach_hang 
+where sp_mkh = ma_khach_hang;
+end \\
+delimiter ;
+
+call  sp_xoa_khach_hang(6);
 

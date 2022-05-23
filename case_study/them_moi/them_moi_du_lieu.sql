@@ -70,7 +70,7 @@ insert into nhan_vien values(4,'Cao Xuân Hải','2000-01-11',
 insert into khach_hang values(1,2,'Nguyễn Văn An','1997-03-30',
 1,'2331123','0123123123','anpro@.vn','Đà Nẵng');
 
-insert into khach_hang values(2,3,'Lê Anh Dũng','2000-09-05',
+insert into khach_hang values(2,2,'Lê Anh Dũng','2000-09-05',
 1,'233112323','0123123456','dungpro@.vn','Vinh');
 
 insert into khach_hang values(3,5,'Trần Kiều Vi','1971-03-30',
@@ -79,7 +79,7 @@ insert into khach_hang values(3,5,'Trần Kiều Vi','1971-03-30',
 insert into khach_hang values(4,1,'Trương Đình Hoàng','2012-11-21',
 1,'233113223','0123123789','anpro@.vn','Quảng Ngãi');
 
-insert into khach_hang values(5,1,'Kiều Minh Tuấn','2002-10-10',
+insert into khach_hang values(5,2,'Kiều Minh Tuấn','2002-10-10',
 1,'233113223','0123123789','tuanpro@.vn','Quảng Trị');
 
 insert into khach_hang values(6,4,'Nguyễn Văn An','1997-03-30',
