@@ -1,0 +1,36 @@
+body{
+    margin: 0;
+    padding: 0;
+}
+
+.header{
+    height: 80px;
+    width: 100%;
+    background: gainsboro;
+}
+.header img {
+    margin-left: 100px;
+    padding: 0;
+    height: 80px;
+}
+.head-link{
+    height: 50px;
+    width: 100%;
+    background: #8fb1d8;
+    padding: 6px;
+}
+.p {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+
+}
+p {
+    width: 7%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 30px;
+    color: darkorchid;
+}
