@@ -48,9 +48,10 @@ nav .search{
 #slide{
     background: darkseagreen;
 }
-.item{
+.item:hover{
     background: darkseagreen;
     margin-top: 5px;
+    transition: 0.5s;
 }
 .item1{
     background: darkseagreen;
